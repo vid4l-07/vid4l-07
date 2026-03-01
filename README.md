@@ -1,6 +1,7 @@
 <div align="center">
 
 # Hi I'm Hugo Vidal
+Computer Engineering student
 
 </div>
 
