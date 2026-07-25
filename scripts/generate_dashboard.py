@@ -284,8 +284,6 @@ def generate_svg(config, stats, ascii_lines, theme="dark"):
         f"{fmt(stars)} stars",
         f"{fmt(followers)} followers",
     ])
-    add_spacer()
-    add_field("Open To", config.get("open-to", ""))
 
     links = config.get("links", [])
     if links:
