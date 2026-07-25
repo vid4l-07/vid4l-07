@@ -1,0 +1,29 @@
+# Profile Config
+github_username: "vid4l-07"
+username: "hvidal"
+hostname: "github"
+
+# Personal Info
+name: "Hugo Vidal"
+birthdate: "2007-11-27"
+location: "Madrid, Spain"
+
+# Neofetch Fields
+role: "Computer Engineering Student"
+focus: "Systems Programming & Cybersecurity"
+os: "Linux"
+learning: "Bug Bounty • Rust"
+languages: "C++ • Python • Bash"
+
+# Links
+links:
+  - label: "Portfolio"
+    url: "https://example.com"
+  - label: "Blog"
+    url: "https://blog.example.com"
+  - label: "LinkedIn"
+    url: "https://linkedin.com/in/example"
+
+# Dashboard dimensions
+svg_width: 520
+svg_height: 460

@@ -1,0 +1,30 @@
+<svg width="520" height="460" viewBox="0 0 520 460"
+     xmlns="http://www.w3.org/2000/svg">
+  <style>
+    .bg { fill: #0d1117; stroke: #30363d; stroke-width: 1; rx: 8; ry: 8; }
+    text { font-family: 'JetBrains Mono','Cascadia Code','Fira Code','SF Mono','Consolas','Courier New',monospace;
+           font-size: 14px; fill: #c9d1d9; white-space: pre; }
+    .label { fill: #79c0ff; font-weight: bold; }
+    .title { fill: #58a6ff; font-weight: bold; }
+    .val { font-weight: bold; }
+    .dim { fill: #8b949e; }
+  </style>
+
+  <rect class="bg" x="0.5" y="0.5" width="519" height="459" />
+
+    <text x="30" y="40" class="title">hvidal@github</text>
+    <text x="30" y="60" class="dim">──────────────────────────────────────────────────</text>
+    <text x="30" y="100"><tspan class="label">Role         </tspan><tspan class="val">Computer Engineering Student</tspan></text>
+    <text x="30" y="120"><tspan class="label">Location     </tspan><tspan class="val">Madrid, Spain</tspan></text>
+    <text x="30" y="140"><tspan class="label">Focus        </tspan><tspan class="val">Systems Programming &amp; Cybersecurity</tspan></text>
+    <text x="30" y="180"><tspan class="label">Languages    </tspan><tspan class="val">C++ • Python • Bash</tspan></text>
+    <text x="30" y="220"><tspan class="label">OS           </tspan><tspan class="val">Linux</tspan></text>
+    <text x="30" y="240"><tspan class="label">Learning     </tspan><tspan class="val">Bug Bounty • Rust</tspan></text>
+    <text x="30" y="280"><tspan class="label">GitHub       </tspan><tspan class="val">43 repositories</tspan></text>
+    <text x="30" y="300"><tspan class="label">             </tspan><tspan class="val">27 stars</tspan></text>
+    <text x="30" y="320"><tspan class="label">             </tspan><tspan class="val">17 followers</tspan></text>
+    <text x="30" y="340"><tspan class="label">             </tspan><tspan class="val">444 commits</tspan></text>
+    <text x="30" y="380"><tspan class="label">Links        </tspan><tspan class="val">Portfolio</tspan></text>
+    <text x="30" y="400"><tspan class="label">             </tspan><tspan class="val">Blog</tspan></text>
+    <text x="30" y="420"><tspan class="label">             </tspan><tspan class="val">LinkedIn</tspan></text>
+</svg>
