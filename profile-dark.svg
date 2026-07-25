@@ -8,8 +8,7 @@
     .title { fill: #58a6ff; font-weight: bold; }
     .val { font-weight: bold; }
     .dim { fill: #8b949e; }
-    .btn { fill: #1f6feb; }
-    .btn-text { fill: #ffffff; font-weight: bold; font-size: 13px; }
+    .link { fill: #c9d1d9; font-weight: bold; }
   </style>
 
   <rect class="bg" x="0.5" y="0.5" width="519" height="399" />
@@ -25,8 +24,5 @@
     <text x="30" y="280"><tspan class="label">GitHub       </tspan><tspan class="val">8 repositories</tspan></text>
     <text x="30" y="300"><tspan class="label">             </tspan><tspan class="val">55 stars</tspan></text>
     <text x="30" y="320"><tspan class="label">             </tspan><tspan class="val">4 followers</tspan></text>
-    <text x="30" y="360"><tspan class="label">Links        </tspan></text>
-    <a href="https://vid4l-07.github.io/portfolio/" target="_blank"><rect x="139.2" y="342.0" width="95.6" height="26" rx="4" ry="4" class="btn"/><text x="187.0" y="361" text-anchor="middle" class="btn-text">Portfolio</text></a>
-    <a href="https://vid4l-07.github.io/Brain-DB/" target="_blank"><rect x="242.8" y="342.0" width="53.6" height="26" rx="4" ry="4" class="btn"/><text x="269.6" y="361" text-anchor="middle" class="btn-text">Blog</text></a>
-    <a href="https://www.linkedin.com/in/hugo-vidal-18a659350" target="_blank"><rect x="304.4" y="342.0" width="87.2" height="26" rx="4" ry="4" class="btn"/><text x="348.0" y="361" text-anchor="middle" class="btn-text">LinkedIn</text></a>
+    <text x="30" y="360"><tspan class="label">Links        </tspan><a href="https://vid4l-07.github.io/portfolio/" target="_blank"><tspan class="link" text-decoration="underline">Portfolio</tspan></a> <tspan class="dim">·</tspan> <a href="https://vid4l-07.github.io/Brain-DB/" target="_blank"><tspan class="link" text-decoration="underline">Blog</tspan></a> <tspan class="dim">·</tspan> <a href="https://www.linkedin.com/in/hugo-vidal-18a659350" target="_blank"><tspan class="link" text-decoration="underline">LinkedIn</tspan></a></text>
 </svg>

@@ -64,7 +64,6 @@ def fetch_github_stats_graphql(username, token):
             "repos": repos["totalCount"],
             "stars": sum(n["stargazerCount"] for n in repos["nodes"]),
             "followers": user["followers"]["totalCount"],
-            "commits": cc["totalCommitContributions"] + cc["restrictedContributionsCount"],
             "contributions": cc["contributionCalendar"]["totalContributions"],
         }
     except Exception as e:
@@ -98,7 +97,6 @@ def fetch_github_stats_rest(username):
             "repos": repos_count,
             "stars": stars,
             "followers": followers,
-            "commits": 0,
             "contributions": 0,
         }
     except Exception as e:
@@ -148,8 +146,6 @@ def generate_svg(config, stats, theme="dark"):
         "label":   "#79c0ff" if is_dark else "#0550ae",
         "title":   "#58a6ff" if is_dark else "#0969da",
         "border":  "#30363d" if is_dark else "#d0d7de",
-        "btn":     "#1f6feb" if is_dark else "#0969da",
-        "btn_txt": "#ffffff",
     }
 
     username = config["username"]
@@ -160,7 +156,6 @@ def generate_svg(config, stats, theme="dark"):
     repos = s.get("repos", 0)
     stars = s.get("stars", 0)
     followers = s.get("followers", 0)
-    commits = s.get("commits", 0)
 
     lines = []
     y = PAD_TOP
@@ -203,37 +198,25 @@ def generate_svg(config, stats, theme="dark"):
             )
             y += LINE_HEIGHT
 
-    def add_buttons(label, items):
+    def add_links(label, items):
         nonlocal y
-        btn_x = val_x
-        btn_h = 26
-        btn_pad = 10
-        btn_gap = 8
-
-        if label:
-            padded = label.ljust(LABEL_WIDTH)
-            lines.append(
-                f'    <text x="{PAD_LEFT}" y="{y}">'
-                f'<tspan class="label">{xml_esc(padded)}</tspan></text>'
-            )
-
+        padded = label.ljust(LABEL_WIDTH)
+        parts = []
         for item in items:
-            btn_text = item["label"]
-            btn_url = item.get("url", "#")
-            text_w = len(btn_text) * CHAR_WIDTH
-            btn_w = text_w + btn_pad * 2
-            btn_top = y - 18
-            text_x = btn_x + btn_w / 2
-
-            lines.append(
-                f'    <a href="{xml_esc(btn_url)}" target="_blank">'
-                f'<rect x="{btn_x:.1f}" y="{btn_top:.1f}" width="{btn_w:.1f}" height="{btn_h}" '
-                f'rx="4" ry="4" class="btn"/>'
-                f'<text x="{text_x:.1f}" y="{y + 1}" text-anchor="middle" class="btn-text">'
-                f'{xml_esc(btn_text)}</text></a>'
-            )
-            btn_x += btn_w + btn_gap
-
+            txt = item["label"] if isinstance(item, dict) else str(item)
+            url = item.get("url", "") if isinstance(item, dict) else ""
+            if url:
+                parts.append(
+                    f'<a href="{xml_esc(url)}" target="_blank">'
+                    f'<tspan class="link" text-decoration="underline">{xml_esc(txt)}</tspan></a>'
+                )
+            else:
+                parts.append(f'<tspan class="link" text-decoration="underline">{xml_esc(txt)}</tspan>')
+        joined = " <tspan class=\"dim\">·</tspan> ".join(parts)
+        lines.append(
+            f'    <text x="{PAD_LEFT}" y="{y}">'
+            f'<tspan class="label">{xml_esc(padded)}</tspan>{joined}</text>'
+        )
         y += LINE_HEIGHT
 
     def add_spacer():
@@ -266,7 +249,7 @@ def generate_svg(config, stats, theme="dark"):
 
     links = config.get("links", [])
     if links:
-        add_buttons("Links", links)
+        add_links("Links", links)
 
     # ── Assemble SVG ──
     svg_h = y + 20
@@ -281,8 +264,7 @@ def generate_svg(config, stats, theme="dark"):
     .title {{ fill: {C["title"]}; font-weight: bold; }}
     .val {{ font-weight: bold; }}
     .dim {{ fill: {C["dim"]}; }}
-    .btn {{ fill: {C["btn"]}; }}
-    .btn-text {{ fill: {C["btn_txt"]}; font-weight: bold; font-size: 13px; }}
+    .link {{ fill: {C["fg"]}; font-weight: bold; }}
   </style>
 
   <rect class="bg" x="0.5" y="0.5" width="{SVG_W - 1}" height="{svg_h - 1}" />
@@ -312,7 +294,7 @@ def main():
         stats = json.loads(cache_path.read_text())
         print("[*] Using cached stats")
     else:
-        stats = {"repos": 0, "stars": 0, "followers": 0, "commits": 0, "contributions": 0}
+        stats = {"repos": 0, "stars": 0, "followers": 0}
 
     for theme in ["dark", "light"]:
         svg = generate_svg(config, stats, theme)
