@@ -140,12 +140,12 @@ def generate_svg(config, stats, theme="dark"):
     is_dark = theme == "dark"
 
     C = {
-        "bg":      "#0d1117" if is_dark else "#ffffff",
-        "fg":      "#c9d1d9" if is_dark else "#24292f",
-        "dim":     "#8b949e" if is_dark else "#57606a",
-        "label":   "#79c0ff" if is_dark else "#0550ae",
-        "title":   "#58a6ff" if is_dark else "#0969da",
-        "border":  "#30363d" if is_dark else "#d0d7de",
+        "bg":      "#19171c" if is_dark else "#f2f1f5",
+        "fg":      "#8b8792" if is_dark else "#4a4950",   # text
+        "dim":     "#29262e" if is_dark else "#c4c2cd",   # Line under title
+        "label":   "#7090b0" if is_dark else "#7090b0",   # Section title
+        "title":   "#8c72b0" if is_dark else "#8c72b0",   # Top title
+        "border":  "#29262e" if is_dark else "#c4c2cd",
     }
 
     username = config["username"]
@@ -212,7 +212,7 @@ def generate_svg(config, stats, theme="dark"):
                 )
             else:
                 parts.append(f'<tspan class="link" text-decoration="underline">{xml_esc(txt)}</tspan>')
-        joined = " <tspan class=\"dim\">·</tspan> ".join(parts)
+        joined = " <tspan class=\"fg\">•</tspan> ".join(parts)
         lines.append(
             f'    <text x="{PAD_LEFT}" y="{y}">'
             f'<tspan class="label">{xml_esc(padded)}</tspan>{joined}</text>'
