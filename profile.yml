@@ -18,11 +18,11 @@ languages: "C++ • Python • Bash"
 # Links
 links:
   - label: "Portfolio"
-    url: "https://example.com"
+    url: "https://vid4l-07.github.io/portfolio/"
   - label: "Blog"
-    url: "https://blog.example.com"
+    url: "https://vid4l-07.github.io/Brain-DB/"
   - label: "LinkedIn"
-    url: "https://linkedin.com/in/example"
+    url: "https://www.linkedin.com/in/hugo-vidal-18a659350"
 
 # Dashboard dimensions
 svg_width: 520

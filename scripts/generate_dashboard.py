@@ -46,10 +46,7 @@ query($login: String!) {
 """
 
 
-def fetch_github_stats(username, token):
-    if not token:
-        print("WARN: No GITHUB_TOKEN, using fallback stats")
-        return None
+def fetch_github_stats_graphql(username, token):
     headers = {"Authorization": f"bearer {token}", "Content-Type": "application/json"}
     try:
         resp = requests.post(GRAPHQL_URL,
@@ -71,8 +68,59 @@ def fetch_github_stats(username, token):
             "contributions": cc["contributionCalendar"]["totalContributions"],
         }
     except Exception as e:
-        print(f"WARN: GitHub API failed: {e}")
+        print(f"WARN: GraphQL API failed: {e}")
         return None
+
+
+def fetch_github_stats_rest(username):
+    try:
+        r = requests.get(f"https://api.github.com/users/{username}", timeout=30)
+        r.raise_for_status()
+        data = r.json()
+        repos_count = data.get("public_repos", 0)
+        followers = data.get("followers", 0)
+
+        stars = 0
+        page = 1
+        while page <= 5:
+            rr = requests.get(
+                f"https://api.github.com/users/{username}/repos?per_page=100&page={page}&type=owner",
+                headers={"Accept": "application/vnd.github.v3+json"},
+                timeout=30,
+            )
+            if rr.status_code != 200 or not rr.json():
+                break
+            for repo in rr.json():
+                stars += repo.get("stargazers_count", 0)
+            page += 1
+
+        return {
+            "repos": repos_count,
+            "stars": stars,
+            "followers": followers,
+            "commits": 0,
+            "contributions": 0,
+        }
+    except Exception as e:
+        print(f"WARN: REST API failed: {e}")
+        return None
+
+
+def fetch_github_stats(username, token):
+    if token:
+        print("[*] Fetching stats via GraphQL...")
+        stats = fetch_github_stats_graphql(username, token)
+        if stats:
+            return stats
+        print("WARN: GraphQL failed, falling back to REST")
+
+    print("[*] Fetching stats via public REST API...")
+    stats = fetch_github_stats_rest(username)
+    if stats:
+        return stats
+
+    print("WARN: All API methods failed, using fallback stats")
+    return None
 
 
 def xml_esc(text):
@@ -94,16 +142,19 @@ def generate_svg(config, stats, theme="dark"):
     is_dark = theme == "dark"
 
     C = {
-        "bg":     "#0d1117" if is_dark else "#ffffff",
-        "fg":     "#c9d1d9" if is_dark else "#24292f",
-        "dim":    "#8b949e" if is_dark else "#57606a",
-        "label":  "#79c0ff" if is_dark else "#0550ae",
-        "title":  "#58a6ff" if is_dark else "#0969da",
-        "border": "#30363d" if is_dark else "#d0d7de",
+        "bg":      "#0d1117" if is_dark else "#ffffff",
+        "fg":      "#c9d1d9" if is_dark else "#24292f",
+        "dim":     "#8b949e" if is_dark else "#57606a",
+        "label":   "#79c0ff" if is_dark else "#0550ae",
+        "title":   "#58a6ff" if is_dark else "#0969da",
+        "border":  "#30363d" if is_dark else "#d0d7de",
+        "btn":     "#1f6feb" if is_dark else "#0969da",
+        "btn_txt": "#ffffff",
     }
 
     username = config["username"]
     hostname = config["hostname"]
+    val_x = PAD_LEFT + LABEL_WIDTH * CHAR_WIDTH
 
     s = stats or {}
     repos = s.get("repos", 0)
@@ -152,6 +203,39 @@ def generate_svg(config, stats, theme="dark"):
             )
             y += LINE_HEIGHT
 
+    def add_buttons(label, items):
+        nonlocal y
+        btn_x = val_x
+        btn_h = 26
+        btn_pad = 10
+        btn_gap = 8
+
+        if label:
+            padded = label.ljust(LABEL_WIDTH)
+            lines.append(
+                f'    <text x="{PAD_LEFT}" y="{y}">'
+                f'<tspan class="label">{xml_esc(padded)}</tspan></text>'
+            )
+
+        for item in items:
+            btn_text = item["label"]
+            btn_url = item.get("url", "#")
+            text_w = len(btn_text) * CHAR_WIDTH
+            btn_w = text_w + btn_pad * 2
+            btn_top = y - 18
+            text_x = btn_x + btn_w / 2
+
+            lines.append(
+                f'    <a href="{xml_esc(btn_url)}" target="_blank">'
+                f'<rect x="{btn_x:.1f}" y="{btn_top:.1f}" width="{btn_w:.1f}" height="{btn_h}" '
+                f'rx="4" ry="4" class="btn"/>'
+                f'<text x="{text_x:.1f}" y="{y + 1}" text-anchor="middle" class="btn-text">'
+                f'{xml_esc(btn_text)}</text></a>'
+            )
+            btn_x += btn_w + btn_gap
+
+        y += LINE_HEIGHT
+
     def add_spacer():
         nonlocal y
         y += LINE_HEIGHT
@@ -177,14 +261,12 @@ def generate_svg(config, stats, theme="dark"):
         f"{fmt(repos)} repositories",
         f"{fmt(stars)} stars",
         f"{fmt(followers)} followers",
-        f"{fmt(commits)} commits",
     ])
     add_spacer()
 
     links = config.get("links", [])
     if links:
-        link_labels = [l["label"] if isinstance(l, dict) else str(l) for l in links]
-        add_field_multiline("Links", link_labels)
+        add_buttons("Links", links)
 
     # ── Assemble SVG ──
     svg_h = y + 20
@@ -199,6 +281,8 @@ def generate_svg(config, stats, theme="dark"):
     .title {{ fill: {C["title"]}; font-weight: bold; }}
     .val {{ font-weight: bold; }}
     .dim {{ fill: {C["dim"]}; }}
+    .btn {{ fill: {C["btn"]}; }}
+    .btn-text {{ fill: {C["btn_txt"]}; font-weight: bold; font-size: 13px; }}
   </style>
 
   <rect class="bg" x="0.5" y="0.5" width="{SVG_W - 1}" height="{svg_h - 1}" />
