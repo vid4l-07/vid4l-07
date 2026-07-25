@@ -3,7 +3,6 @@ import sys
 import json
 import yaml
 import requests
-from datetime import datetime, date
 from pathlib import Path
 
 SCRIPT_DIR = Path(__file__).parent
@@ -14,14 +13,34 @@ LINE_HEIGHT = 20
 CHAR_WIDTH = 8.4
 LABEL_WIDTH = 13
 
-SVG_W = 520
+ASCII_FONT_SIZE = 10
+ASCII_CHAR_WIDTH = 6.0
+ASCII_LINE_HEIGHT = 12
+
+SVG_W = 800
 PAD_TOP = 40
-PAD_LEFT = 30
+ASCII_PAD_LEFT = 15
+RIGHT_X = 380
+INFO_PAD_LEFT = RIGHT_X
 
 
 def load_config():
     with open(ROOT_DIR / "profile.yml") as f:
         return yaml.safe_load(f)
+
+
+def load_ascii_art():
+    art_path = ROOT_DIR / "ascii"
+    all_lines = []
+    for fpath in sorted(art_path.glob("*.txt")):
+        with open(fpath) as f:
+            file_lines = [l.rstrip("\n") for l in f.readlines()]
+        while file_lines and not file_lines[-1].strip():
+            file_lines.pop()
+        if all_lines:
+            all_lines.append("")
+        all_lines.extend(file_lines)
+    return all_lines
 
 
 # ──────────────────────────────────────────────
@@ -136,7 +155,7 @@ def fmt(n):
 # ──────────────────────────────────────────────
 # SVG Generation
 # ──────────────────────────────────────────────
-def generate_svg(config, stats, theme="dark"):
+def generate_svg(config, stats, ascii_lines, theme="dark"):
     is_dark = theme == "dark"
 
     C = {
@@ -146,35 +165,54 @@ def generate_svg(config, stats, theme="dark"):
         "label":   "#7090b0" if is_dark else "#7090b0",   # Section title
         "title":   "#8c72b0" if is_dark else "#8c72b0",   # Top title
         "border":  "#29262e" if is_dark else "#c4c2cd",
+        "art":     "#8b8792" if is_dark else "#4a4950",   # ascii
     }
 
     username = config["username"]
     hostname = config["hostname"]
-    val_x = PAD_LEFT + LABEL_WIDTH * CHAR_WIDTH
 
     s = stats or {}
     repos = s.get("repos", 0)
     stars = s.get("stars", 0)
     followers = s.get("followers", 0)
 
-    lines = []
+    svg_parts = []
+
+    # ── ASCII Art (left panel) ──
+    if ascii_lines:
+        for i, line in enumerate(ascii_lines):
+            y = PAD_TOP + i * ASCII_LINE_HEIGHT
+            svg_parts.append(
+                f'    <text x="{ASCII_PAD_LEFT}" y="{y}" class="ascii" '
+                f'xml:space="preserve">{xml_esc(line)}</text>'
+            )
+
+    # ── Vertical separator ──
+    art_h = len(ascii_lines) * ASCII_LINE_HEIGHT if ascii_lines else 0
+    sep_x = RIGHT_X - 15
+    svg_parts.append(
+        f'    <line x1="{sep_x}" y1="12" x2="{sep_x}" y2="{art_h + PAD_TOP + 8}" '
+        f'stroke="{C["dim"]}" stroke-width="1" stroke-dasharray="4,4" opacity="1"/>'
+    )
+
+    # ── Info Panel (right side) ──
     y = PAD_TOP
 
     def add_title(text):
         nonlocal y
-        lines.append(f'    <text x="{PAD_LEFT}" y="{y}" class="title">{xml_esc(text)}</text>')
+        svg_parts.append(f'    <text x="{INFO_PAD_LEFT}" y="{y}" class="title">{xml_esc(text)}</text>')
         y += LINE_HEIGHT
 
     def add_separator(length):
         nonlocal y
-        lines.append(f'    <text x="{PAD_LEFT}" y="{y}" class="dim">{"─" * length}</text>')
+        svg_parts.append(f'    <text x="{INFO_PAD_LEFT}" y="{y}" class="dim">{"─" * length}</text>')
         y += LINE_HEIGHT
 
     def add_field(label, value):
         nonlocal y
         padded = label.ljust(LABEL_WIDTH)
-        lines.append(
-            f'    <text x="{PAD_LEFT}" y="{y}">'
+        svg_parts.append(
+            f'    <text x="{INFO_PAD_LEFT}" y="{y}">'
             f'<tspan class="label">{xml_esc(padded)}</tspan>'
             f'<tspan class="val">{xml_esc(str(value))}</tspan></text>'
         )
@@ -183,16 +221,16 @@ def generate_svg(config, stats, theme="dark"):
     def add_field_multiline(label, values):
         nonlocal y
         padded = label.ljust(LABEL_WIDTH)
-        lines.append(
-            f'    <text x="{PAD_LEFT}" y="{y}">'
+        svg_parts.append(
+            f'    <text x="{INFO_PAD_LEFT}" y="{y}">'
             f'<tspan class="label">{xml_esc(padded)}</tspan>'
             f'<tspan class="val">{xml_esc(str(values[0]))}</tspan></text>'
         )
         y += LINE_HEIGHT
         indent = " " * LABEL_WIDTH
         for v in values[1:]:
-            lines.append(
-                f'    <text x="{PAD_LEFT}" y="{y}">'
+            svg_parts.append(
+                f'    <text x="{INFO_PAD_LEFT}" y="{y}">'
                 f'<tspan class="label">{indent}</tspan>'
                 f'<tspan class="val">{xml_esc(str(v))}</tspan></text>'
             )
@@ -213,8 +251,8 @@ def generate_svg(config, stats, theme="dark"):
             else:
                 parts.append(f'<tspan class="link" text-decoration="underline">{xml_esc(txt)}</tspan>')
         joined = " <tspan class=\"fg\">•</tspan> ".join(parts)
-        lines.append(
-            f'    <text x="{PAD_LEFT}" y="{y}">'
+        svg_parts.append(
+            f'    <text x="{INFO_PAD_LEFT}" y="{y}">'
             f'<tspan class="label">{xml_esc(padded)}</tspan>{joined}</text>'
         )
         y += LINE_HEIGHT
@@ -223,7 +261,7 @@ def generate_svg(config, stats, theme="dark"):
         nonlocal y
         y += LINE_HEIGHT
 
-    # ── Build content ──
+    # ── Build info content ──
     add_title(f"{username}@{hostname}")
     add_separator(50)
     add_spacer()
@@ -251,15 +289,19 @@ def generate_svg(config, stats, theme="dark"):
     if links:
         add_links("Links", links)
 
-    # ── Assemble SVG ──
-    svg_h = y + 20
+    # ── Dynamic height ──
+    info_h = y + 20
+    art_h_total = PAD_TOP + len(ascii_lines) * ASCII_LINE_HEIGHT + 20 if ascii_lines else 0
+    svg_h = max(info_h, art_h_total)
 
+    # ── Assemble SVG ──
     svg = f"""<svg width="{SVG_W}" height="{svg_h}" viewBox="0 0 {SVG_W} {svg_h}"
      xmlns="http://www.w3.org/2000/svg">
   <style>
     .bg {{ fill: {C["bg"]}; stroke: {C["border"]}; stroke-width: 1; rx: 8; ry: 8; }}
     text {{ font-family: 'JetBrains Mono','Cascadia Code','Fira Code','SF Mono','Consolas','Courier New',monospace;
            font-size: {FONT_SIZE}px; fill: {C["fg"]}; white-space: pre; }}
+    .ascii {{ font-size: {ASCII_FONT_SIZE}px; fill: {C["art"]}; }}
     .label {{ fill: {C["label"]}; font-weight: bold; }}
     .title {{ fill: {C["title"]}; font-weight: bold; }}
     .val {{ font-weight: bold; }}
@@ -268,8 +310,7 @@ def generate_svg(config, stats, theme="dark"):
   </style>
 
   <rect class="bg" x="0.5" y="0.5" width="{SVG_W - 1}" height="{svg_h - 1}" />
-
-{chr(10).join(lines)}
+{chr(10).join(svg_parts)}
 </svg>"""
     return svg
 
@@ -285,6 +326,9 @@ def main():
 
     print(f"[*] Generating dashboard for {api_user} (display: {username})")
 
+    ascii_lines = load_ascii_art()
+    print(f"[*] Loaded {len(ascii_lines)} lines of ASCII art")
+
     stats = fetch_github_stats(api_user, token)
     cache_path = ROOT_DIR / ".stats-cache.json"
     if stats:
@@ -297,7 +341,7 @@ def main():
         stats = {"repos": 0, "stars": 0, "followers": 0}
 
     for theme in ["dark", "light"]:
-        svg = generate_svg(config, stats, theme)
+        svg = generate_svg(config, stats, ascii_lines, theme)
         if "<svg" not in svg or "</svg>" not in svg:
             print(f"ERROR: {theme} SVG invalid, skipping")
             continue

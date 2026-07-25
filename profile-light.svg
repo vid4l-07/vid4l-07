@@ -1,9 +1,10 @@
-<svg width="520" height="400" viewBox="0 0 520 400"
+<svg width="800" height="400" viewBox="0 0 800 400"
      xmlns="http://www.w3.org/2000/svg">
   <style>
     .bg { fill: #f2f1f5; stroke: #c4c2cd; stroke-width: 1; rx: 8; ry: 8; }
     text { font-family: 'JetBrains Mono','Cascadia Code','Fira Code','SF Mono','Consolas','Courier New',monospace;
            font-size: 14px; fill: #4a4950; white-space: pre; }
+    .ascii { font-size: 10px; fill: #4a4950; }
     .label { fill: #7090b0; font-weight: bold; }
     .title { fill: #8c72b0; font-weight: bold; }
     .val { font-weight: bold; }
@@ -11,18 +12,46 @@
     .link { fill: #4a4950; font-weight: bold; }
   </style>
 
-  <rect class="bg" x="0.5" y="0.5" width="519" height="399" />
-
-    <text x="30" y="40" class="title">hvidal@github</text>
-    <text x="30" y="60" class="dim">──────────────────────────────────────────────────</text>
-    <text x="30" y="100"><tspan class="label">Role         </tspan><tspan class="val">Computer Engineering Student</tspan></text>
-    <text x="30" y="120"><tspan class="label">Location     </tspan><tspan class="val">Madrid, Spain</tspan></text>
-    <text x="30" y="140"><tspan class="label">Focus        </tspan><tspan class="val">Systems Programming &amp; Cybersecurity</tspan></text>
-    <text x="30" y="180"><tspan class="label">Languages    </tspan><tspan class="val">C++ • Python • Bash</tspan></text>
-    <text x="30" y="220"><tspan class="label">OS           </tspan><tspan class="val">Linux</tspan></text>
-    <text x="30" y="240"><tspan class="label">Learning     </tspan><tspan class="val">Bug Bounty • Rust</tspan></text>
-    <text x="30" y="280"><tspan class="label">GitHub       </tspan><tspan class="val">8 repositories</tspan></text>
-    <text x="30" y="300"><tspan class="label">             </tspan><tspan class="val">0 stars</tspan></text>
-    <text x="30" y="320"><tspan class="label">             </tspan><tspan class="val">4 followers</tspan></text>
-    <text x="30" y="360"><tspan class="label">Links        </tspan><a href="https://vid4l-07.github.io/portfolio/" target="_blank"><tspan class="link" text-decoration="underline">Portfolio</tspan></a> <tspan class="fg">•</tspan> <a href="https://vid4l-07.github.io/Brain-DB/" target="_blank"><tspan class="link" text-decoration="underline">Blog</tspan></a> <tspan class="fg">•</tspan> <a href="https://www.linkedin.com/in/hugo-vidal-18a659350" target="_blank"><tspan class="link" text-decoration="underline">LinkedIn</tspan></a></text>
+  <rect class="bg" x="0.5" y="0.5" width="799" height="399" />
+    <text x="15" y="40" class="ascii" xml:space="preserve">                            ---                         </text>
+    <text x="15" y="52" class="ascii" xml:space="preserve">                      .............                     </text>
+    <text x="15" y="64" class="ascii" xml:space="preserve">                   ...................                  </text>
+    <text x="15" y="76" class="ascii" xml:space="preserve">                  .....................                 </text>
+    <text x="15" y="88" class="ascii" xml:space="preserve">                 .......................                </text>
+    <text x="15" y="100" class="ascii" xml:space="preserve">                .........................               </text>
+    <text x="15" y="112" class="ascii" xml:space="preserve">                 ........................               </text>
+    <text x="15" y="124" class="ascii" xml:space="preserve">                 ...........-.-..........               </text>
+    <text x="15" y="136" class="ascii" xml:space="preserve">                 .-+++++++####++--.-....                </text>
+    <text x="15" y="148" class="ascii" xml:space="preserve">                 .-+++###########+++--..                </text>
+    <text x="15" y="160" class="ascii" xml:space="preserve">                -..-+---+##+------.---..-               </text>
+    <text x="15" y="172" class="ascii" xml:space="preserve">                -----..+-##+++..--+---.-++              </text>
+    <text x="15" y="184" class="ascii" xml:space="preserve">                +--++++++##+++++++++---+++              </text>
+    <text x="15" y="196" class="ascii" xml:space="preserve">                --+++++++#+++####+++-.-+++              </text>
+    <text x="15" y="208" class="ascii" xml:space="preserve">                 --+##+-+#+++####++---++-               </text>
+    <text x="15" y="220" class="ascii" xml:space="preserve">                  -++++---+++###+++-..                  </text>
+    <text x="15" y="232" class="ascii" xml:space="preserve">                  .-++-+-+++++++++--..                  </text>
+    <text x="15" y="244" class="ascii" xml:space="preserve">                   -+++------++++--.-                   </text>
+    <text x="15" y="256" class="ascii" xml:space="preserve">                    .-++++++++++-----+                  </text>
+    <text x="15" y="268" class="ascii" xml:space="preserve">                     .-+++++++----+++#+                 </text>
+    <text x="15" y="280" class="ascii" xml:space="preserve">                     .----------++++###+#               </text>
+    <text x="15" y="292" class="ascii" xml:space="preserve">                   ##.--------+++++############         </text>
+    <text x="15" y="304" class="ascii" xml:space="preserve">               +####+-----++++++++#############++++     </text>
+    <text x="15" y="316" class="ascii" xml:space="preserve">          +#########+#--+---+++++#################+++-  </text>
+    <text x="15" y="328" class="ascii" xml:space="preserve">      +#############+#---+++++++###################+++++</text>
+    <text x="15" y="340" class="ascii" xml:space="preserve">    ++##############++#+++++++#########################+</text>
+    <text x="15" y="352" class="ascii" xml:space="preserve">   ++###############+++#+++++##++#######################</text>
+    <text x="15" y="364" class="ascii" xml:space="preserve">  -++######################+############################</text>
+    <line x1="365" y1="12" x2="365" y2="384" stroke="#c4c2cd" stroke-width="1" stroke-dasharray="4,4" opacity="1"/>
+    <text x="380" y="40" class="title">hvidal@github</text>
+    <text x="380" y="60" class="dim">──────────────────────────────────────────────────</text>
+    <text x="380" y="100"><tspan class="label">Role         </tspan><tspan class="val">Computer Engineering Student</tspan></text>
+    <text x="380" y="120"><tspan class="label">Location     </tspan><tspan class="val">Madrid, Spain</tspan></text>
+    <text x="380" y="140"><tspan class="label">Focus        </tspan><tspan class="val">Systems Programming &amp; Cybersecurity</tspan></text>
+    <text x="380" y="180"><tspan class="label">Languages    </tspan><tspan class="val">C++ • Python • Bash</tspan></text>
+    <text x="380" y="220"><tspan class="label">OS           </tspan><tspan class="val">Linux</tspan></text>
+    <text x="380" y="240"><tspan class="label">Learning     </tspan><tspan class="val">Bug Bounty • Rust</tspan></text>
+    <text x="380" y="280"><tspan class="label">GitHub       </tspan><tspan class="val">8 repositories</tspan></text>
+    <text x="380" y="300"><tspan class="label">             </tspan><tspan class="val">55 stars</tspan></text>
+    <text x="380" y="320"><tspan class="label">             </tspan><tspan class="val">4 followers</tspan></text>
+    <text x="380" y="360"><tspan class="label">Links        </tspan><a href="https://vid4l-07.github.io/portfolio/" target="_blank"><tspan class="link" text-decoration="underline">Portfolio</tspan></a> <tspan class="fg">•</tspan> <a href="https://vid4l-07.github.io/Brain-DB/" target="_blank"><tspan class="link" text-decoration="underline">Blog</tspan></a> <tspan class="fg">•</tspan> <a href="https://www.linkedin.com/in/hugo-vidal-18a659350" target="_blank"><tspan class="link" text-decoration="underline">LinkedIn</tspan></a></text>
 </svg>
