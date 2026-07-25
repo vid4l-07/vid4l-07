@@ -1,4 +1,4 @@
-<svg width="800" height="400" viewBox="0 0 800 400"
+<svg width="800" height="420" viewBox="0 0 800 420"
      xmlns="http://www.w3.org/2000/svg">
   <style>
     .bg { fill: #19171c; stroke: #29262e; stroke-width: 1; rx: 8; ry: 8; }
@@ -12,7 +12,7 @@
     .link { fill: #8b8792; font-weight: bold; }
   </style>
 
-  <rect class="bg" x="0.5" y="0.5" width="799" height="399" />
+  <rect class="bg" x="0.5" y="0.5" width="799" height="419" />
     <text x="15" y="40" class="ascii" xml:space="preserve">                            ---                         </text>
     <text x="15" y="52" class="ascii" xml:space="preserve">                      .............                     </text>
     <text x="15" y="64" class="ascii" xml:space="preserve">                   ...................                  </text>
@@ -47,11 +47,12 @@
     <text x="380" y="100"><tspan class="label">Role         </tspan><tspan class="val">Computer Engineering Student</tspan></text>
     <text x="380" y="120"><tspan class="label">Location     </tspan><tspan class="val">Madrid, Spain</tspan></text>
     <text x="380" y="140"><tspan class="label">Focus        </tspan><tspan class="val">Systems Programming &amp; Cybersecurity</tspan></text>
-    <text x="380" y="180"><tspan class="label">Languages    </tspan><tspan class="val">C++ • Python • Bash</tspan></text>
-    <text x="380" y="220"><tspan class="label">OS           </tspan><tspan class="val">Linux</tspan></text>
-    <text x="380" y="240"><tspan class="label">Learning     </tspan><tspan class="val">Bug Bounty • Rust</tspan></text>
-    <text x="380" y="280"><tspan class="label">GitHub       </tspan><tspan class="val">8 repositories</tspan></text>
-    <text x="380" y="300"><tspan class="label">             </tspan><tspan class="val">55 stars</tspan></text>
-    <text x="380" y="320"><tspan class="label">             </tspan><tspan class="val">4 followers</tspan></text>
-    <text x="380" y="360"><tspan class="label">Links        </tspan><a href="https://vid4l-07.github.io/portfolio/" target="_blank"><tspan class="link" text-decoration="underline">Portfolio</tspan></a> <tspan class="fg">•</tspan> <a href="https://vid4l-07.github.io/Brain-DB/" target="_blank"><tspan class="link" text-decoration="underline">Blog</tspan></a> <tspan class="fg">•</tspan> <a href="https://www.linkedin.com/in/hugo-vidal-18a659350" target="_blank"><tspan class="link" text-decoration="underline">LinkedIn</tspan></a></text>
+    <text x="380" y="180"><tspan class="label">Programming  </tspan><tspan class="val">C++ • Python • Bash</tspan></text>
+    <text x="380" y="200"><tspan class="label">Languages    </tspan><tspan class="val">Spanish • English</tspan></text>
+    <text x="380" y="240"><tspan class="label">Tech         </tspan><tspan class="val">Linux • Git</tspan></text>
+    <text x="380" y="260"><tspan class="label">Current      </tspan><tspan class="val">Bug Bounty • HTB Writeups • Rust</tspan></text>
+    <text x="380" y="300"><tspan class="label">GitHub       </tspan><tspan class="val">8 repositories</tspan></text>
+    <text x="380" y="320"><tspan class="label">             </tspan><tspan class="val">55 stars</tspan></text>
+    <text x="380" y="340"><tspan class="label">             </tspan><tspan class="val">4 followers</tspan></text>
+    <text x="380" y="380"><tspan class="label">Open To      </tspan><tspan class="val">Summer Internships</tspan></text>
 </svg>

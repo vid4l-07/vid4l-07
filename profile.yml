@@ -11,18 +11,11 @@ location: "Madrid, Spain"
 # Neofetch Fields
 role: "Computer Engineering Student"
 focus: "Systems Programming & Cybersecurity"
-os: "Linux"
-learning: "Bug Bounty • Rust"
+tech: "Linux • Git"
+current: "Bug Bounty • HTB Writeups • Rust"
 languages: "C++ • Python • Bash"
-
-# Links
-links:
-  - label: "Portfolio"
-    url: "https://vid4l-07.github.io/portfolio/"
-  - label: "Blog"
-    url: "https://vid4l-07.github.io/Brain-DB/"
-  - label: "LinkedIn"
-    url: "https://www.linkedin.com/in/hugo-vidal-18a659350"
+languages-spoken: "Spanish • English"
+open-to: "Summer Internships"
 
 # Dashboard dimensions
 svg_width: 520

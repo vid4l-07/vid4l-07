@@ -271,11 +271,12 @@ def generate_svg(config, stats, ascii_lines, theme="dark"):
     add_field("Focus", config.get("focus", ""))
     add_spacer()
 
-    add_field("Languages", config.get("languages", ""))
+    add_field("Programming", config.get("languages", ""))
+    add_field("Languages", config.get("languages-spoken", ""))
     add_spacer()
 
-    add_field("OS", config.get("os", ""))
-    add_field("Learning", config.get("learning", ""))
+    add_field("Tech", config.get("tech", ""))
+    add_field("Current", config.get("current", ""))
     add_spacer()
 
     add_field_multiline("GitHub", [
@@ -284,9 +285,11 @@ def generate_svg(config, stats, ascii_lines, theme="dark"):
         f"{fmt(followers)} followers",
     ])
     add_spacer()
+    add_field("Open To", config.get("open-to", ""))
 
     links = config.get("links", [])
     if links:
+        add_spacer()
         add_links("Links", links)
 
     # ── Dynamic height ──
