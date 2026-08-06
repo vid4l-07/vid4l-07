@@ -6,9 +6,9 @@
       <img alt="Terminal Dashboard" src="./profile-dark.svg" width="835" />
     </picture>
 </div>
+-->
 
 <div align="center">
--->
 
 # Hi I'm Hugo Vidal
 Computer Engineering student
