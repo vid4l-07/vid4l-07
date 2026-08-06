@@ -18,4 +18,6 @@ Computer Engineering student
 ## 📊 GitHub Stats:
 <div align="center">
 <img width="310" align="center" alt="Top Language" src="https://github-readme-stats-tau-nine-81.vercel.app/api/top-langs/?username=vid4l-07&layout=compact&title_color=cba6f7&theme=nord&border_color=585260&exclude_repo=Brain-DB"/>
+
+<img width="310" align="center" alt="Top Language" src=" https://github-readme-stats-tau-nine-81.vercel.app/api?username=vid4l-07&layout=compact&title_color=cba6f7&theme=nord&border_color=585260&hide=prs,issues,contribs"/>
 </div>
